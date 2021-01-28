@@ -1,13 +1,17 @@
 pipeline {
     agent any
+    tools {
+        maven 'LocalMaven'
+        jdk 'jdk8'
+    }
     stages {
-        stage('Build Application'){
-            steps{
+        stage('Build Application') {
+            steps {
                 sh 'mvn -f java-tomcat-sample/pom.xml clean package'
             }
             post {
                 success {
-                    echo "Archiving Artifacts"
+                    echo "Archiving Artifact... !"
                     archiveArtifacts artifacts : '**/*.war'
                 }
             }
