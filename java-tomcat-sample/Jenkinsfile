@@ -16,6 +16,14 @@ pipeline {
                 }
             }
         }
+        stage ('Deploying Production') {
+            steps {
+                timeout(time:5,unit:'DAYS'){
+                    input message: 'Approve PRODUCTION Deployment ?'
+                }
+                build job : 'Deploying_to_prod'
+            }
+        }
         stage('Create Docker Image for Tomcat'){
             steps {
                 sh 'docker build ./java-tomcat-sample -t tomcatDockerImage:${env.BUILD_ID}'
