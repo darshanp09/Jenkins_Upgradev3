@@ -24,5 +24,10 @@ pipeline {
                 build job : 'Deploying_to_prod'
             }
         }
+        stage('Create Docker Image for Tomcat'){
+            steps {
+                sh 'docker build ./java-tomcat-sample -t tomcatDockerImage:${env.BUILD_ID}'
+            }
+        }
     }
 }
